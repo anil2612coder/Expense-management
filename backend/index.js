@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv"
 import { connectDb } from "./config/connectdb.js";
 import userRoute from "./routes/userRoute.js"
+import tronsectionRoute from  "./routes/transectionRoute.js"
+
 
 const app = express();
 
@@ -16,6 +18,8 @@ app.use(cors())
 
 //routes
 app.use("/api/v1/users",userRoute )
+app.use("/api/v1/transections",tronsectionRoute )
+
 
 
 // Port
