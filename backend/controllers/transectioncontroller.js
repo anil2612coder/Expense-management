@@ -1,4 +1,4 @@
-import { transectionModel } from "../models/TransectionModel.js";
+import { transectionModel } from "../models/transectionModel.js";
 import moment from "moment"
 
 export const getAllTransection = async (req, res)=>{
