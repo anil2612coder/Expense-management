@@ -40,4 +40,15 @@ export const addTransection = async (req, res)=>{
   }
 }
 
+export const deleteTransection = async (req, res)=>{
+   try {
+    
+    await transectionModel.findOneAndDelete({_id:req.body.transectionId})
+    res.status(200).send("Transection Deleted")
+   } catch (error) {
+     console.log(error)
+     res.status(500).josn(error)
+   }
+}
+
 

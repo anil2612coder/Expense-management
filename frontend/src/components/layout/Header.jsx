@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
+import { UserAddOutlined } from "@ant-design/icons";
 
+import "./Header.css";
 const Header = () => {
   const navigate = useNavigate();
   const [loginuser, setLoginuser] = useState("");
@@ -36,8 +38,11 @@ const Header = () => {
               Expense Management
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item p-1">
-                <p> {loginuser && loginuser.name}</p>
+              <li className="nav-item p-1 mx-3">
+                <h6 className="user">
+                  <UserAddOutlined />
+                  <span> {loginuser && loginuser.name}</span>
+                </h6>
               </li>
               <li className="nav-item">
                 <button className="btn btn-primary" onClick={logoutHandler}>

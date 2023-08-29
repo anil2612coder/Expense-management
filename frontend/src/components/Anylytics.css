@@ -1,0 +1,60 @@
+/* Add this CSS to your stylesheet */
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #ffffff, #f7f7f7);
+  }
+  
+  .card-header {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 6px 6px 0 0;
+    font-weight: bold;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .text-success {
+    color: #28a745;
+  }
+  
+  .text-danger {
+    color: #dc3545;
+  }
+  
+  .row.m-3 {
+    margin: 15px;
+  }
+  
+  .Progress {
+    display: inline-block;
+    margin-top: 10px;
+  }
+  
+  .Progress-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* Adjust Progress bar colors */
+  .ant-progress-inner {
+    border-radius: 50%;
+    background-color: #eaeaea;
+  }
+  
+  /* Adjust Progress bar border */
+  .ant-progress-bg {
+    border-radius: 50%;
+  }
+  
+  /* Adjust Progress bar text color */
+  .ant-progress-text {
+    color: #333;
+    font-weight: bold;
+  }
+  

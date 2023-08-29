@@ -11,6 +11,7 @@ import axios from "axios";
 import Spinner from "../components/Spinner";
 import moment from "moment";
 import Analytics from "../components/Analytics";
+import "./HomePage.css";
 
 const HomePage = () => {
   const [showModel, setShowModel] = useState(false);
@@ -63,101 +64,127 @@ const HomePage = () => {
     getAllTransections();
   }, [frequesny, selectedDate, type]);
 
+  const handleDelete = async (transaction) => {
+    try {
+      setLoading(true);
+      await axios.post(
+        "http://localhost:5000/api/v1/transections/delete-transection",
+        { transectionId: transaction._id }
+      );
+      setLoading(false);
+      getAllTransections();
+      message.success("Item Deleted");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      message.error(error);
+    }
+  };
+
   return (
     <Layout>
       {loading && <Spinner />}
-      <div className="filters">
-        <div>
-          <h6>Select Frequency</h6>
-          <Select
-            value={frequesny}
-            onChange={(value) => {
-              setFrequency(value);
-            }}
-          >
-            <Select.Option value="7">Last 1 Weak</Select.Option>
-            <Select.Option value="30">Last 1 Month</Select.Option>
-            <Select.Option value="365">Last 1 Year</Select.Option>
-            <Select.Option value="custom">Custom</Select.Option>
-          </Select>
-          {frequesny === "custom" && (
-            <RangePicker
-              value={selectedDate}
-              onChange={(values) => {
-                setSelectedDate(values);
+      <div className="filters-container">
+        <div className="filters">
+          <div className="filter-section">
+            <h6 className="filter-title">Select Frequency</h6>
+            <Select
+              className="filter-select"
+              value={frequesny}
+              onChange={(value) => {
+                setFrequency(value);
+              }}
+            >
+              <Select.Option value="7">Last 1 Weak</Select.Option>
+              <Select.Option value="30">Last 1 Month</Select.Option>
+              <Select.Option value="365">Last 1 Year</Select.Option>
+              <Select.Option value="custom">Custom</Select.Option>
+            </Select>
+            {frequesny === "custom" && (
+              <RangePicker
+                className="filter-range-picker"
+                value={selectedDate}
+                onChange={(values) => {
+                  setSelectedDate(values);
+                }}
+              />
+            )}
+          </div>
+          <div className="filter-section">
+            <h6 className="filter-title">Select Type</h6>
+            <Select
+              className="filter-select"
+              value={type}
+              onChange={(value) => {
+                setType(value);
+              }}
+            >
+              <Select.Option value="all">All</Select.Option>
+              <Select.Option value="income">Income</Select.Option>
+              <Select.Option value="expense">Expense</Select.Option>
+            </Select>
+          </div>
+          <div className="switch-icon">
+            <UnorderedListOutlined
+              className={`view-icon ${
+                viewData === "table" ? "active-icon" : "inactive-icon"
+              }`}
+              onClick={() => {
+                setViewData("table");
               }}
             />
-          )}
-        </div>
-        <div>
-          <h6>Select Type</h6>
-          <Select
-            value={type}
-            onChange={(value) => {
-              setType(value);
-            }}
-          >
-            <Select.Option value="all">All</Select.Option>
-            <Select.Option value="income">Income</Select.Option>
-
-            <Select.Option value="expense">Expense</Select.Option>
-          </Select>
-        </div>
-        <div className="mx-2 switch-icon">
-          <UnorderedListOutlined
-            className={`mx-2 ${
-              viewData === "table" ? "active-icon" : "inactive-icon"
-            }`}
-            onClick={() => {
-              setViewData("table");
-            }}
-          />
-          <AreaChartOutlined
-            className={`mx-2 ${
-              viewData === "analytics" ? "active-icon " : "inactive-icon"
-            }`}
-            onClick={() => {
-              setViewData("analytics");
-            }}
-          />
-        </div>
-        <div>
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              setShowModel(true);
-            }}
-          >
-            Add New
-          </button>
+            <AreaChartOutlined
+              className={`view-icon ${
+                viewData === "analytics" ? "active-icon" : "inactive-icon"
+              }`}
+              onClick={() => {
+                setViewData("analytics");
+              }}
+            />
+          </div>
+          <div>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setShowModel(true);
+              }}
+            >
+              Add New
+            </button>
+          </div>
         </div>
       </div>
+
       <div className="content">
         {viewData === "table" ? (
-          <table className="table m-3 table-striped table-hover ">
+          <table className="custom-table">
             <thead>
               <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Type</th>
-                <th scope="col">Category</th>
-                <th scope="col">Refrence</th>
-                <th scope="col">Discription</th>
-                <th scope="col">Action</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Reference</th>
+                <th>Description</th>
+                <th>Action</th>
               </tr>
             </thead>
-            <tbody className="table-group-divider ">
+            <tbody className="table-group-divider">
               {allTransection.map((transaction, index) => (
                 <tr key={transaction._id}>
                   <td>{moment(transaction.date).format("DD-MM-YYYY")}</td>
                   <td>{transaction.amount}</td>
+                  <td className={`type-${transaction.type}`}>
+                    {transaction.type}
+                  </td>
                   <td>{transaction.category}</td>
-                  <td>{transaction.type}</td>
-                  <td>{transaction.description}</td>
                   <td>{transaction.refrence}</td>
+                  <td>{transaction.description}</td>
                   <td>
-                    <div>
-                      <DeleteOutlined />
+                    <div className="action-icons">
+                      <DeleteOutlined
+                        onClick={() => handleDelete(transaction)}
+                      />
                     </div>
                   </td>
                 </tr>

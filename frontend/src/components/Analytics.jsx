@@ -1,5 +1,6 @@
 import React from "react";
 import { Progress } from "antd";
+import "./Anylytics.css";
 
 const Analytics = ({ allTransection }) => {
   const categories = [
@@ -99,8 +100,8 @@ const Analytics = ({ allTransection }) => {
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-4">
+      <div className="row m-3">
+        <div className="col-md-5">
           <div className="card">
             <div className="card-header">Categorywise Income</div>
 
@@ -128,7 +129,7 @@ const Analytics = ({ allTransection }) => {
             })}
           </div>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-5">
           <div className="card">
             <div className="card-header">Categorywise Expense</div>
 

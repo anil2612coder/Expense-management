@@ -1,0 +1,90 @@
+
+
+.filters-container {
+  background-image: linear-gradient(to bottom, #f0f5f9, #d7e4f2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.filters {
+  background-image: linear-gradient(to bottom, #f0f5f9, #d7e4f2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.filter-title {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 7px;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.filter-range-picker {
+  margin-top: 7px;
+}
+
+
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.custom-table th {
+  color: #333;
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+/* Styling for transaction types */
+.type-income {
+  color: #27ae60;
+}
+
+.type-expense {
+  color: #e74c3c;
+}
+
+/* Additional styling for action icons */
+.action-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-icons svg {
+  cursor: pointer;
+  color: #e74c3c;
+  transition: color 0.3s;
+}
+
+.action-icons svg:hover {
+  color: #c0392b;
+}

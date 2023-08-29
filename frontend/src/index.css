@@ -3,6 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+body{
+    background-image: linear-gradient(to bottom, #e5e8eb, #c0cbd8);
+}
 
 .content{
    min-height: 82vh;
@@ -25,19 +28,26 @@
 
 /* antd icons */
 .switch-icon{
-    border: 2px solid rgba(0, 0, 0, 0.712);
+   border: 2px solid rgb(92, 56, 56);
     border-radius: 5px;
-    padding: 6px;
+    /* padding: 20px; */
+    /* margin-bottom: -10px; */
+    padding: 0 8px 0 8px;
+    margin: 0 20px -20px 20px;
 }
 .anticon svg{
-    font-size: 20px;
+    font-size: 25px;
     cursor: pointer;
+    
 }
 
 .active-icon{
-    font-size: 28px;
+    font-size: 34px;
     color: rgb(138, 5, 5);
 }
 .inactive-icon{
-    color: rgba(128, 128, 128, 0.842);
+    color: rgba(150, 129, 129, 0.842);
+}
+.view-icon{
+    margin: 10px;
 }
