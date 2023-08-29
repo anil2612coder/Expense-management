@@ -1,8 +1,22 @@
-import { transectionModel } from "../models/TransectionModel.js"
+import { transectionModel } from "../models/TransectionModel.js";
+import moment from "moment"
 
 export const getAllTransection = async (req, res)=>{
    try {
-    const transections = await transectionModel.find({userid: req.body.userid});
+    const {frequesny,selectedDate,type} = req.body;
+    const transections = await transectionModel.find({
+      ...(frequesny !== "custom"
+        ? {
+            date: {
+              $gt: moment().subtract(Number(frequesny), "d").toDate(),
+            },
+          }
+        : {
+            date: {
+              $gte: selectedDate[0],
+              $lte: selectedDate[1],
+            },
+          }),userid: req.body.userid, ...(type !== "all" && {type})});
     res.status(200).json(transections)
     
    } catch (error) {

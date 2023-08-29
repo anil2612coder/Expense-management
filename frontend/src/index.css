@@ -5,7 +5,7 @@
 }
 
 .content{
-    height: 82vh;
+   min-height: 82vh;
 }
 
 
@@ -21,4 +21,23 @@
     justify-content: space-between;
     padding: 15px 20px;
     box-shadow: 0 0 3px gray;
+}
+
+/* antd icons */
+.switch-icon{
+    border: 2px solid rgba(0, 0, 0, 0.712);
+    border-radius: 5px;
+    padding: 6px;
+}
+.anticon svg{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.active-icon{
+    font-size: 28px;
+    color: rgb(138, 5, 5);
+}
+.inactive-icon{
+    color: rgba(128, 128, 128, 0.842);
 }

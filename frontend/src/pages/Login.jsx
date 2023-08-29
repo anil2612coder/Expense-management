@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, message } from "antd";
 import axios from "axios";
-
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import "./Login.css"; // Import the CSS file
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -37,24 +37,32 @@ const Login = () => {
   }, [navigate]);
 
   return (
-    <>
-      <div className="register">
+    <div className="login-container">
+      <div className="login-form">
         {loading && <Spinner />}
+        <h1>Login Form</h1>
         <Form layout="vertical" onFinish={submitHandler}>
-          <h1>Login Form</h1>
-          <Form.Item label="Email" name="email">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please enter your email" }]}
+          >
             <Input type="email" />
           </Form.Item>
-          <Form.Item label="Password" name="password">
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please enter your password" }]}
+          >
             <Input type="password" />
           </Form.Item>
-          <div className="d-flex">
-            <Link to="/register">Not a user ? Click Here to register</Link>
-            <button className="btn btn-primary"> Login</button>
+          <div className="form-actions">
+            <Link to="/register">Not a user? Click Here to Register</Link>
+            <button className="btn btn-primary">Login</button>
           </div>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
 

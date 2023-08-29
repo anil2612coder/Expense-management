@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/layout";
-import { Modal, Form, Input, Select, message } from "antd";
+import { Modal, Form, Input, Select, message, DatePicker } from "antd";
+import {
+  UnorderedListOutlined,
+  AreaChartOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 import axios from "axios";
 import Spinner from "../components/Spinner";
+import moment from "moment";
+import Analytics from "../components/Analytics";
 
 const HomePage = () => {
   const [showModel, setShowModel] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allTransection, setAllTransection] = useState([]);
+  const [frequesny, setFrequency] = useState("7");
+  const { RangePicker } = DatePicker;
+  const [selectedDate, setSelectedDate] = useState([]);
+  const [type, setType] = useState("all");
+  const [viewData, setViewData] = useState("table");
 
   /// from handeling
   const handleSubmit = async (values) => {
@@ -22,6 +35,7 @@ const HomePage = () => {
       setShowModel(false);
       setLoading(false);
       message.success("Item Added");
+      getAllTransections();
     } catch (error) {
       setLoading(false);
       message.error("failed");
@@ -34,11 +48,11 @@ const HomePage = () => {
       setLoading(true);
       const res = await axios.post(
         "http://localhost:5000/api/v1/transections/get-transection",
-        { userid: user._id }
+        { userid: user._id, frequesny, selectedDate, type }
       );
       setLoading(false);
       setAllTransection(res.data);
-      console.log(res.data);
+      // console.log(frequesny);
     } catch (error) {
       console.log(error);
       message.error(error);
@@ -47,13 +61,66 @@ const HomePage = () => {
 
   useEffect(() => {
     getAllTransections();
-  }, []);
+  }, [frequesny, selectedDate, type]);
 
   return (
     <Layout>
       {loading && <Spinner />}
       <div className="filters">
-        <div>Range filter</div>
+        <div>
+          <h6>Select Frequency</h6>
+          <Select
+            value={frequesny}
+            onChange={(value) => {
+              setFrequency(value);
+            }}
+          >
+            <Select.Option value="7">Last 1 Weak</Select.Option>
+            <Select.Option value="30">Last 1 Month</Select.Option>
+            <Select.Option value="365">Last 1 Year</Select.Option>
+            <Select.Option value="custom">Custom</Select.Option>
+          </Select>
+          {frequesny === "custom" && (
+            <RangePicker
+              value={selectedDate}
+              onChange={(values) => {
+                setSelectedDate(values);
+              }}
+            />
+          )}
+        </div>
+        <div>
+          <h6>Select Type</h6>
+          <Select
+            value={type}
+            onChange={(value) => {
+              setType(value);
+            }}
+          >
+            <Select.Option value="all">All</Select.Option>
+            <Select.Option value="income">Income</Select.Option>
+
+            <Select.Option value="expense">Expense</Select.Option>
+          </Select>
+        </div>
+        <div className="mx-2 switch-icon">
+          <UnorderedListOutlined
+            className={`mx-2 ${
+              viewData === "table" ? "active-icon" : "inactive-icon"
+            }`}
+            onClick={() => {
+              setViewData("table");
+            }}
+          />
+          <AreaChartOutlined
+            className={`mx-2 ${
+              viewData === "analytics" ? "active-icon " : "inactive-icon"
+            }`}
+            onClick={() => {
+              setViewData("analytics");
+            }}
+          />
+        </div>
         <div>
           <button
             className="btn btn-primary"
@@ -65,30 +132,42 @@ const HomePage = () => {
           </button>
         </div>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Type</th>
-            <th scope="col">Category</th>
-            <th scope="col">Refrence</th>
-            <th scope="col">Discription</th>
-          </tr>
-        </thead>
-        <tbody className="table-group-divider">
-          {allTransection.map((transaction, index) => (
-            <tr key={transaction._id}>
-              <td>{transaction.date}</td>
-              <td>{transaction.amount}</td>
-              <td>{transaction.category}</td>
-              <td>{transaction.type}</td>
-              <td>{transaction.description}</td>
-              <td>{transaction.refrence}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="content">
+        {viewData === "table" ? (
+          <table className="table m-3 table-striped table-hover ">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Type</th>
+                <th scope="col">Category</th>
+                <th scope="col">Refrence</th>
+                <th scope="col">Discription</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider ">
+              {allTransection.map((transaction, index) => (
+                <tr key={transaction._id}>
+                  <td>{moment(transaction.date).format("DD-MM-YYYY")}</td>
+                  <td>{transaction.amount}</td>
+                  <td>{transaction.category}</td>
+                  <td>{transaction.type}</td>
+                  <td>{transaction.description}</td>
+                  <td>{transaction.refrence}</td>
+                  <td>
+                    <div>
+                      <DeleteOutlined />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <Analytics allTransection={allTransection} />
+        )}
+      </div>
 
       <Modal
         title="Add Transection"
