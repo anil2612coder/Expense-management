@@ -29,7 +29,7 @@ const HomePage = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       setLoading(true);
       await axios.post(
-        "http://localhost:5000/api/v1/transections/add-transection",
+        "https://expense-exdz.onrender.com/api/v1/transections/add-transection",
         { ...values, userid: user._id }
       );
       // console.log({ ...values, userid: user._id });
@@ -48,7 +48,7 @@ const HomePage = () => {
       const user = JSON.parse(localStorage.getItem("user"));
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:5000/api/v1/transections/get-transection",
+        "https://expense-exdz.onrender.com/api/v1/transections/get-transection",
         { userid: user._id, frequesny, selectedDate, type }
       );
       setLoading(false);
@@ -68,7 +68,7 @@ const HomePage = () => {
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:5000/api/v1/transections/delete-transection",
+        "https://expense-exdz.onrender.com/api/v1/transections/delete-transection",
         { transectionId: transaction._id }
       );
       setLoading(false);

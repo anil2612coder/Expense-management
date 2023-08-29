@@ -12,7 +12,10 @@ const Register = () => {
   const submitHandler = async (values) => {
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/v1/users/register", values);
+      await axios.post(
+        "https://expense-exdz.onrender.com/api/v1/users/register",
+        values
+      );
       message.success("User Registered successfully");
       navigate("/login");
     } catch (error) {
